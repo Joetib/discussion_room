@@ -1,30 +1,37 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+  <div id="nav" class="bg-dark text-light">
+    <NavBar />
   <router-view/>
+  </div>
 </template>
-
+<script>
+import NavBar from './components/layout/NavBar.vue'
+export default {
+  name: 'App',
+  components: {
+    NavBar,
+  },
+  beforeCreate() {
+    this.$store.commit("fetchTopics");
+  },
+}
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.pointer {
+  cursor: pointer;
 }
-
-#nav {
-  padding: 30px;
+.bg-dark-2{
+  background: #333;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.bg-dark-3{
+  background: #444;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.form-control{
+  background: #555;
+  color: #ddd;
+}
+.form-control:focus{
+  background: #444;
+  color: #ccc;
 }
 </style>
