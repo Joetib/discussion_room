@@ -1,5 +1,33 @@
 [[redirects]]
-  from = "/*"
+  from = "/login"
+  to = "/index.html"
+  status = 200
+  force = true
+  
+
+[[redirects]]
+  from = "/addtopic"
+  to = "/index.html"
+  status = 200
+  force = true
+
+
+ [[redirects]]
+  from = "/edit/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+
+[[redirects]]
+  from = "/topic/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+
+[[redirects]]
+  from = "/signup"
   to = "/index.html"
   status = 200
   force = true
