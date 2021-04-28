@@ -53,7 +53,10 @@ export default {
             console.log(e.data);
             this.$router.push("/login");
           })
-          .catch((e) => console.log(e));
+          .catch((e) => {
+            console.log(e)
+            this.error = `Sorry, that failed, try using a different username as '${this.username}' might be already taken`
+          });
       }
     },
   },
