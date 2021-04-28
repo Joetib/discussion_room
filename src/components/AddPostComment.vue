@@ -38,6 +38,15 @@ export default {
     },
     save() {
       if (this.comment && this.comment.length > 1) {
+        this.handleFileUpload();
+        if (
+          this.image === null ||
+          this.image == "" ||
+          this.image === undefined ||
+          typeof this.image === "undefined"
+        ) {
+          this.image = new File([], null);
+        }
         let formData = new FormData();
         formData.append("image", this.image);
         formData.append("replyer", this.$store.state.username);

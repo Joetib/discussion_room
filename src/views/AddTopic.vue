@@ -51,6 +51,13 @@ export default {
   methods: {
     addPost() {
       let formData = new FormData();
+      this.handleFileUpload()
+      if (this.image === null || this.image === undefined || typeof this.image === 'undefined'){
+        this.image = new File([], null)
+      }
+      console.log(this.image)
+      console.log(this.image == undefined)
+      console.log(this.$refs.image.files[0])
       formData.append("image", this.image);
       formData.append("author", this.$store.state.username);
       formData.append("title", this.title);
@@ -74,7 +81,6 @@ export default {
         });
     },
     handleFileUpload() {
-      console.log("handling posts");
       this.image = this.$refs.image.files[0];
     },
   },

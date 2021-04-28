@@ -52,6 +52,7 @@ export default createStore({
       axios.get("/discussion-page?id=" + id).then((e) => {
         state.current_topic = e.data["discussion-topic"];
         state.current_topic.replies = e.data["replies to the topic"]
+        console.log(e.data)
         console.log(state.current_topic);
       });
     },

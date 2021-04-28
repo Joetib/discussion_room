@@ -13,7 +13,7 @@
         <div class="pb-3">
           {{ topic.details }}
         </div>
-        <img
+        <img 
           :src="topic.image"
           style="max-height: 60vh; object-fit: cover; width: 100%"
           class="mb-3 img-responsive img-thumbnail"
@@ -102,7 +102,7 @@ export default {
       let result = confirm("Are you sure you want to delete this post?");
       if (result) {
         console.log(this.$store.state.current_topic.title)
-        axios.delete("/delete", {
+        axios.post("/delete", {
           title: this.$store.state.current_topic.title,
         }).then(resp => {
             console.log(resp.data)
