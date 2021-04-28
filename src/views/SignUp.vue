@@ -3,6 +3,9 @@
     <div class="py-5 row d-flex justify-content-center align-items-center">
       <div class="col-md-6">
         <h3>Sign Up</h3>
+        <div class="col-12 text-danger bg-light p-2" v-if="error">
+          <p class="m-0">{{ error }}</p>
+        </div>
         <div class="col-12 py-2">
           <label for="id_username">Username</label>
           <input v-model="username" class="form-control" type="text" />
@@ -13,7 +16,6 @@
         </div>
         <div class="col-12 py-3">
           <button class="btn btn-primary" @click="signup">Sign Up</button>
-          {{ username }}
         </div>
       </div>
     </div>
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "SignUp",
@@ -29,30 +31,31 @@ export default {
     return {
       username: "",
       password: "",
+      error: null,
     };
   },
-  
+
   methods: {
     signup() {
-      axios
-        .post("/auth/signup", {
-          username: this.username,
-          password: this.password,
-        })
-        .then((e) => {
-          this.username = e.data.username;
-          this.token = e.data.token;
-          this.$store.commit("updateUsername", e.data.username);
-          this.$store.commit("updateToken", e.data.token);
-          if (this.$route.params.nextUrl !== null) {
-            this.$router.push(this.$route.params.nextUrl);
-          } else {
-            this.$router.push("LogIn");
-          }
-        })
-        .catch((e) => console.error(e));
+      if (this.username.length < 3) {
+        this.error = "Username must be at least 3 characters long";
+      } else if (this.username.includes(" ")) {
+        this.error = "Username must contain no spaces";
+      } else if (this.password.length < 5) {
+        this.error = "Password must be at least 5 characters long";
+      } else {
+        axios
+          .post("/auth/signup", {
+            username: this.username,
+            password: this.password,
+          })
+          .then((e) => {
+            console.log(e.data);
+            this.$router.push("/login");
+          })
+          .catch((e) => console.log(e));
+      }
     },
-    
   },
 };
 </script>
