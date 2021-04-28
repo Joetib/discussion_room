@@ -16,7 +16,6 @@
         </div>
         <div class="col-12 py-3">
           <button class="btn btn-primary" @click="login">Log In</button>
-          {{ username }}
         </div>
       </div>
     </div>

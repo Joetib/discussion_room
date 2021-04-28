@@ -101,12 +101,13 @@ export default {
     deletePost() {
       let result = confirm("Are you sure you want to delete this post?");
       if (result) {
+        console.log(this.$store.state.current_topic.title)
         axios.delete("/delete", {
           title: this.$store.state.current_topic.title,
         }).then(resp => {
             console.log(resp.data)
             this.$router.push('/')
-        });
+        }).catch(e => console.log(e));
       }
     },
   },
