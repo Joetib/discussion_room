@@ -59,6 +59,9 @@ export default {
             } else {
               this.$router.push(this.$route.params.nextUrl);
             }
+          }).catch(e => {
+            this.error = "Sorry that didn't work, check if your username and password are correct."
+            console.log(e)
           });
       }
     },
