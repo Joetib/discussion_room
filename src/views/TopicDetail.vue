@@ -3,8 +3,9 @@
     <div class="row">
       <div class="col-md-8">
         <div class="pb-3">
-          <h3>{{ topic.title }}</h3>
           <p class="text-muted">{{ topic.author }}</p>
+          <h3>{{ topic.title }}</h3>
+          <p class="text-muted"> {{topic.date_created }}</p>
           <div v-if="isAuthor">
             <button @click="deletePost" class="btn btn-danger m-2">Delete</button>
             <button @click="editPost" class="btn btn-success m-2">Edit</button>
