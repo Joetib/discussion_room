@@ -38,12 +38,12 @@ export default {
     login() {
       if (this.username.length < 3) {
         this.error = "Username must be at least 3 characters long";
-      }else if (this.username.includes(" ")) {
-        this.error =
-          "Username must contain no spaces";
-      }  else if (this.password.length < 5) {
+      } else if (this.username.includes(" ")) {
+        this.error = "Username must contain no spaces";
+      } else if (this.password.length < 5) {
         this.error = "Password must be at least 5 characters long";
       } else {
+        this.$store.commit("setIsLoading", true);
         axios
           .post("/auth/login", {
             username: this.username,
@@ -54,14 +54,19 @@ export default {
             this.token = e.data.token;
             this.$store.commit("updateUsername", e.data.username);
             this.$store.commit("updateToken", e.data.token);
+            this.$store.commit("setIsLoading", false);
+
             if (this.$route.params.nextUrl == null) {
               this.$router.push("/");
             } else {
               this.$router.push(this.$route.params.nextUrl);
             }
-          }).catch(e => {
-            this.error = "Sorry that didn't work, check if your username and password are correct."
-            console.log(e)
+          })
+          .catch((e) => {
+            this.error =
+              "Sorry that didn't work, check if your username and password are correct.";
+            console.log(e);
+            this.$store.commit("setIsLoading", false);
           });
       }
     },

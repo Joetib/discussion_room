@@ -16,6 +16,7 @@ export default createStore({
       image: '',
       author: '',
     },
+    is_loading : false,
   },
   mutations: {
     clearCurrentTopic(state){
@@ -43,17 +44,26 @@ export default createStore({
       state.isAuthenticated = isAuthenticated;
     },
     fetchTopics(state) {
+      state.is_loading = true
       axios.get('/retrieve-topics').then(resp => {
         state.posts = resp.data.Topics;
         console.log(state.posts)
-      }).catch(e => console.error(e.resp));
+        state.is_loading = false
+      }).catch(e => {
+        console.error(e.resp);
+        state.is_loading = false
+      });
     },
     fetchCurrentTopic(state, { id }) {
+      state.is_loading = true;
       axios.get("/discussion-page?id=" + id).then((e) => {
         state.current_topic = e.data["discussion-topic"];
         state.current_topic.replies = e.data["replies to the topic"]
         console.log(e.data)
         console.log(state.current_topic);
+        state.is_loading = false
+      }).catch(() => {
+        state.is_loading = false
       });
     },
     initializeStore(state) {
@@ -65,6 +75,10 @@ export default createStore({
     logout(state){
       localStorage.removeItem('token');
       state.token = null
+    },
+    setIsLoading(state, value){
+      state.is_loading = value
+
     },
 
   },

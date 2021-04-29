@@ -59,7 +59,7 @@ export default {
     this.$store.commit("fetchCurrentTopic", { id: this.$route.params.id });
     this.details = this.$store.state.current_topic.details;
   },
-  mounted(){
+  mounted() {
     this.details = this.$store.state.current_topic.details;
   },
   methods: {
@@ -67,7 +67,8 @@ export default {
       let formData = new FormData();
       this.handleFileUpload();
       if (
-        this.image === null || this.image == ''||
+        this.image === null ||
+        this.image == "" ||
         this.image === undefined ||
         typeof this.image === "undefined"
       ) {
@@ -75,7 +76,9 @@ export default {
       }
       formData.append("id", this.$store.state.current_topic.id);
       formData.append("details", this.details);
-      formData.append('image', this.image)
+      formData.append("image", this.image);
+      this.$store.commit("setIsLoading", true);
+
       axios
         .post("/update", formData, {
           headers: {
@@ -84,13 +87,18 @@ export default {
         })
         .then((resp) => {
           console.log(resp.data);
+          this.$store.commit("setIsLoading", false);
+
           if (resp.data.status == "OK") {
             this.$router.push(`/topic/${this.$store.state.current_topic.id}`);
+          } else {
+            alert(resp.data);
           }
         })
         .catch((e) => {
           console.error(e);
           alert("sorry, that didn't work, try again.");
+          this.$store.commit("setIsLoading", false);
         });
     },
     handleFileUpload() {

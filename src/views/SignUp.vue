@@ -44,6 +44,8 @@ export default {
       } else if (this.password.length < 5) {
         this.error = "Password must be at least 5 characters long";
       } else {
+        this.$store.commit("setIsLoading", true);
+
         axios
           .post("/auth/signup", {
             username: this.username,
@@ -51,11 +53,13 @@ export default {
           })
           .then((e) => {
             console.log(e.data);
+            this.$store.commit("setIsLoading", false);
             this.$router.push("/login");
           })
           .catch((e) => {
-            console.log(e)
-            this.error = `Sorry, that failed, try using a different username as '${this.username}' might be already taken`
+            console.log(e);
+            this.error = `Sorry, that failed, try using a different username as '${this.username}' might be already taken`;
+            this.$store.commit("setIsLoading", true);
           });
       }
     },

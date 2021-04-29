@@ -51,17 +51,23 @@ export default {
   methods: {
     addPost() {
       let formData = new FormData();
-      this.handleFileUpload()
-      if (this.image === null || this.image === undefined || typeof this.image === 'undefined'){
-        this.image = new File([], null)
+      this.handleFileUpload();
+      if (
+        this.image === null ||
+        this.image === undefined ||
+        typeof this.image === "undefined"
+      ) {
+        this.image = new File([], null);
       }
-      console.log(this.image)
-      console.log(this.image == undefined)
-      console.log(this.$refs.image.files[0])
+      console.log(this.image);
+      console.log(this.image == undefined);
+      console.log(this.$refs.image.files[0]);
       formData.append("image", this.image);
       formData.append("author", this.$store.state.username);
       formData.append("title", this.title);
       formData.append("details", this.details);
+      this.$store.commit("setIsLoading", true);
+
       axios
         .post("/insert", formData, {
           headers: {
@@ -70,14 +76,18 @@ export default {
         })
         .then((resp) => {
           console.log(resp.data);
+          this.$store.commit("setIsLoading", false);
+          alert(resp.data);
           if (resp.data.status == "OK") {
             this.$router.push("/");
+          } else {
+            alert(resp.data);
           }
         })
         .catch((e) => {
-            console.error(e);
-            alert("sorry, that didn't work, try again.")
-
+          console.error(e);
+          alert("sorry, that didn't work, try again.");
+          this.$store.commit("setIsLoading", false);
         });
     },
     handleFileUpload() {
