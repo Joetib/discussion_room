@@ -1,7 +1,7 @@
 <template>
   <div id="nav" class="bg-dark text-light">
     <NavBar />
-    <div class="loading" v-if="$store.state.is_loading">
+    <div class="loading sticky-top" v-if="$store.state.is_loading">
     <div class="circle-loaer"></div>
       <span class="load-item"></span>
         <span class="load-item"></span>
